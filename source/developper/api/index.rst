@@ -17,6 +17,7 @@ Exposed Methods
 :ref:`getcompletehierarchy`
 :ref:`startvirtualcluster`
 :ref:`getvirtualclusterresponse`
+:ref:`migratevirtualmachine`
 :ref:`destroyVirtualMachine`
 :ref:`rebootVirtualMachine`
 :ref:`resumeVirtualMachine`

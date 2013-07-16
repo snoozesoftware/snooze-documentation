@@ -1,5 +1,5 @@
-Group Leader 
------------------------
+2. Group Leader
+----------------
 
 ========================== =
 Methods Summary
@@ -11,8 +11,6 @@ migrateVirtualMachine_
 
 
 In this section we assume that the group leader node is running on localhost.
-
-.. _startvirtualcluster:
 
 startVirtualCluster
 ###################
@@ -115,8 +113,6 @@ When using this driver, polling for the response is wrapped in the *create_node*
 
     Out << [<Node: uuid=b69042832fd33b092eb5d0211554d3c983c80ddf, name=debian1, state=RUNNING, public_ips=192.168.122.11, provider=Snooze ...>]
 
-.. _getvirtualclusterresponse:
-
 getVirtualClusterResponse
 #########################
 
@@ -194,7 +190,7 @@ Using it
     virtualClusterResponse = groupLeaderCommunicator.getVirtualClusterResponse(taskIdentifier);
 
 
-.. _migratevirtualmachine:
+
 
 migrateVirtualMachine
 #####################

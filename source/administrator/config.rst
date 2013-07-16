@@ -148,6 +148,31 @@ Overload and underload anomaly detection is performed based on aggregates. Parti
 
 For each resource (i.e. CPU, memory, and network) Snooze defines three thresholds (MIN, MID, and MAX). When the aggregated utilization in one of the resources falls below the MIN threshold the LC is considered underloaded. Similarly, if the utilization crosses the MAX threshold the LC is considered overloaded. The MID threshold is used to cap the max allowed used resource capacity. This allows to keep a buffer of spare resources to compensate during periods of high resource contention. For example if set to 0.5 at max 50% of the available resource capacity will be available to host VMs.
 
+External Notifier
+^^^^^^^^^^^^^^^^^
+
+Snooze can send notification to the external world about what happens in the system.
+See the rabbitmq section of the documentation to know how to configure the rabbitmq service.
+
+* *external.notifier.transport*
+
+Transport type to use for sending notification. Only RABBITMQ is supported.
+
+* *external.notifier.address* 
+* *external.notifier.port* 
+
+Where to send notification. For example the address and the port of the rabbitmq broker.
+
+* *external.notifier.username*
+* *external.notifier.password* 
+
+Credentials.
+
+* *external.notifier.vhost*
+
+Rabbitmq virtual host.
+
+
 Estimation
 ^^^^^^^^^^^
 
