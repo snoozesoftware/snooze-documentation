@@ -7,6 +7,7 @@ Welcome to Snooze's documentation!
 ==================================
 
 Contents:
+*********
 
 .. toctree::
    :maxdepth: 2
@@ -17,11 +18,11 @@ Contents:
   
 
   
+Support
+*******
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
+* `mailing list <https://groups.google.com/group/snoozesoftware/>`_
+* `issue tracker <https://github.com/snoozesoftware/snoozenode/issues/>`_
+* `contact form <http://snooze.inria.fr/contact/>`_
 
