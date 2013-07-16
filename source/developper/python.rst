@@ -35,7 +35,7 @@ You can copy/paste the following code in the python interpreter or in a script f
     from libcloud.compute.types import Provider
     from libcloud.compute.providers import get_driver
 
-* Next, connect to the driver. Depending on your configuration pass one bootstrap address to the driver, here we assume that a bootstrap is listenning on “127.0.0.1:5000″.
+* Next, connect to the driver. Depending on your configuration pass one bootstrap address to the driver, here we assume that a bootstrap is listenning on *127.0.0.1:5000*.
 
 ::
 

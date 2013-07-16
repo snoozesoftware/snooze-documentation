@@ -136,7 +136,7 @@ Modify the /etc/hosts file
 Make sure your set the right IP and hostname of your main network interface.
 Enable bride networking /etc/network/interfaces
 
-If you main network interface is “eth0″ modify as follows:
+If your main network interface is *eth0* modify as follows:
 
 ::
 
