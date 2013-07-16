@@ -1,0 +1,561 @@
+Bootstrap 
+--------------------
+========================== =
+Methods Summary
+========================== =
+getGroupLeaderDescription_
+getCompleteHierarchy_
+========================== =
+
+In this section we assume that a *bootstrap* node is running on *localhost*.
+
+.. _getgroupleaderdescription:
+
+getGroupLeaderDescription
+#########################
+
+Method
+******
+
+GET
+
+Returns
+*******
+
+The group manager description object of the group leader.
+
+
+Using it
+********
+
+* Curl
+
+::
+
+    ($) curl localhost:5000/bootstrap?getGroupLeaderDescription
+
+::
+
+    {
+      "id":"f5cfb585-800e-4ff8-a97f-5681d0610892",
+      "hostname":"mafalda",
+      "listenSettings":{
+         "controlDataAddress":{
+            "address":"127.0.0.1",
+            "port":5001
+         },
+         "monitoringDataAddress":{
+            "address":"127.0.0.1",
+            "port":6000
+         }
+      },
+      "localControllers":{
+      },
+      "heartbeatAddress":{
+         "address":"UNKNOWN",
+         "port":-1
+      },
+      "summaryInformation":{
+      },
+      "virtualMachines":[
+      ]
+    }
+
+
+* Java 
+
+::
+
+
+    import org.inria.myriads.snoozecommon.communication.NetworkAddress;
+    import org.inria.myriads.snoozecommon.communication.groupmanager.GroupManagerDescription;
+    import org.inria.myriads.snoozecommon.communication.rest.CommunicatorFactory;
+    import org.inria.myriads.snoozecommon.communication.rest.api.BootstrapAPI;
+
+    [...]
+    
+    NetworkAddress bootstrapAddress = new NetworkAddress();
+    bootstrapAddress.setAddress("localhost");
+    bootstrapAddress.setPort(5000);
+    BootstrapAPI bootstrapCommunicator = CommunicatorFactory.newBootstrapCommunicator(bootstrapAddress);
+    GroupManagerDescription groupLeaderDescription = bootstrapCommunicator.getGroupLeaderDescription();
+
+* Python (libcloud)
+
+::
+
+    >> from libcloud.compute.types import Provider
+    >> from libcloud.compute.providers import get_driver
+
+    >> Snooze = get_driver(Provider.SNOOZE)
+    >> driver = Snooze("127.0.0.1","5000")
+
+    >> data = driver.get_groupleader()
+
+    >> print data
+
+::
+
+   {
+      "summaryInformation": {}, 
+      "localControllers": {}, 
+      "hostname": "mafalda", 
+      "heartbeatAddress": {
+         "port": -1, 
+         "address": "UNKNOWN"
+      }, 
+      "virtualMachines": [], 
+      "listenSettings": {
+         "controlDataAddress": {
+            "port": 5001, 
+            "address": "127.0.0.1"
+         }, 
+         "monitoringDataAddress": {
+            "port": 6000, 
+            "address": "127.0.0.1"
+         }
+      }, 
+      "id": "f5cfb585-800e-4ff8-a97f-5681d0610892"
+   }
+
+.. _getcompletehierarchy:
+
+getCompleteHierarchy
+####################
+
+Method
+******
+
+GET
+
+Returns
+*******
+
+The complete hierarchy of the systems.
+
+Using it
+********
+
+* Curl  (2 GMs - 1 LC)
+
+::
+
+    ($) curl http://localhost:5000/bootstrap?getCompleteHierarchy
+
+:: 
+
+    {
+      "groupManagerDescriptions":[
+         {
+            "id":"20fb798c-5d72-47d7-b80e-a613a81dc603",
+            "listenSettings":{
+               "controlDataAddress":{
+                  "address":"127.0.0.1",
+                  "port":5002
+               },
+               "monitoringDataAddress":{
+                  "address":"127.0.0.1",
+                  "port":6001
+               }
+            },
+            "localControllers":{
+               "ddb07acb-643e-4f9d-87e3-23ae4b629509":{
+                  "id":"ddb07acb-643e-4f9d-87e3-23ae4b629509",
+                  "controlDataAddress":{
+                     "address":"127.0.0.1",
+                     "port":5003
+                  },
+                  "status":"ACTIVE",
+                  "hypervisorSettings":{
+                     "port":16509,
+                     "driver":"qemu",
+                     "transport":"tcp",
+                     "migration":{
+                        "method":"live",
+                        "timeout":60
+                     }
+                  },
+                  "totalCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "wakeupSettings":{
+                     "driver":"IPMI",
+                     "options":"-I lanplus -H BMC_IP -U user -P password"
+                  },
+                  "hostname":"mafalda",
+                  "virtualMachineMetaData":{
+
+                  },
+                  "assignedVirtualMachines":[
+
+                  ]
+               }
+            },
+            "heartbeatAddress":{
+               "address":"225.4.5.6",
+               "port":10001
+            },
+            "hostname":"mafalda",
+            "summaryInformation":{
+               "1373888959514":{
+                  "timeStamp":1373888959514,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888956509":{
+                  "timeStamp":1373888956509,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888953504":{
+                  "timeStamp":1373888953504,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888950498":{
+                  "timeStamp":1373888950498,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888947493":{
+                  "timeStamp":1373888947493,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888944487":{
+                  "timeStamp":1373888944487,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888941482":{
+                  "timeStamp":1373888941482,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888938477":{
+                  "timeStamp":1373888938477,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888935472":{
+                  "timeStamp":1373888935472,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               },
+               "1373888932467":{
+                  "timeStamp":1373888932467,
+                  "usedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "requestedCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "localControllers":[
+
+                  ],
+                  "activeCapacity":[
+                     4.0,
+                     3958348.0,
+                     131072.0,
+                     131072.0
+                  ],
+                  "passiveCapacity":[
+                     0.0,
+                     0.0,
+                     0.0,
+                     0.0
+                  ],
+                  "legacyIpAddresses":[
+
+                  ]
+               }
+            },
+            "virtualMachines":[
+
+            ]
+         }
+      ]
+    }
+
+* Java
+
+:: 
+
+    import org.inria.myriads.snoozecommon.communication.NetworkAddress;
+    import org.inria.myriads.snoozecommon.communication.groupmanager.repository.GroupLeaderRepositoryInformation;
+    import org.inria.myriads.snoozecommon.communication.rest.CommunicatorFactory;
+    import org.inria.myriads.snoozecommon.communication.rest.api.BootstrapAPI;
+
+    [...]
+
+    NetworkAddress bootstrapAddress = new NetworkAddress();
+    bootstrapAddress.setAddress("localhost");
+    bootstrapAddress.setPort(5000);
+    BootstrapAPI bootstrapCommunicator = CommunicatorFactory.newBootstrapCommunicator(bootstrapAddress);
+    GroupLeaderRepositoryInformation hierarchy = bootstrapCommunicator.getCompleteHierarchy();
+
+* Python (libcloud)
+
+Not implemented
+

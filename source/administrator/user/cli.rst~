@@ -1,0 +1,51 @@
+Installation of the Command Line Interface
+------------------------------------------
+
+This page describes how to install, configure, and use the Snooze command-line interface (CLI). Note that for the time being the CLI installation tutorial is for Debian users only. Still as we also provide the CLI binary, with little efforts you should be able to run it on any distribution after following this tutorial.
+
+Install the client
+^^^^^^^^^^^^^^^^^^
+
+Get the latest client Debian package from the Download page and install it:
+
+::
+
+    ($) dpkg -i snoozeclient_X.X-X_all.deb
+
+Configure the client
+^^^^^^^^^^^^^^^^^^^^
+
+Open the client configuration package file */usr/share/snoozeclient/configs/snooze_client.cfg*. It is split into two parts: general and statistics
+
+::
+
+    general.bootstrapNodes = localhost:5000,192.168.0.2:5001
+    general.submissionPollingInterval = 6
+    general.numberOfMonitoringEntries = 5
+    general.dumpOutputFile = /tmp/snooze_tree.xml
+    general.graphPollingInterval = 5
+
+    statistics.enabled = false
+    statistics.output.format = gnuplot
+    statistics.output.file = /tmp/snooze_results.dat
+
+* *General*
+
+The client application requires at least one active bootstrap node in order to discover the current group leader (GL). Consequently it will contact one of the active servers specified in the *general.bootstrapNodes* list to do so. 
+
+The VM submission requests are processed asynchronously in Snooze. The client application submits the requests to the GL and periodically polls it for a reply. The polling interval can be specified using the *general.submissionPollingInterval parameter*.
+
+The client application offers features to retrieve VM monitoring information as well as to visualize the system hierarchy. Therefore, it needs to send requests to the group manages (GMs). The parameter *general.numberOfMonitoringEntries* specifies the number of monitoring entries client requests from the GMs.
+
+Finally the client application offers a feature to dump the hierarchy layout in the GraphML format to the disk. Therefore, the *general.dumpOutputFile* parameter specifies the output file name.
+
+* *Statistics*
+
+Once enabled (*statistics.enabled*) the client application will write statistics (e.g. submission time, number of failed submissions) to the disk. You can specify the statistics output format and the file name using the two parameters: *statistics.output.format*, *statistics.output.file*. Note that currently only GNUPlot output format is implemented.
+
+Control VM life-cycle
+^^^^^^^^^^^^^^^^^^^^^
+
+On the shell execute the *“snoozeclient”* command. The following commands are currently supported:
+
+
