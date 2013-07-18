@@ -1,5 +1,5 @@
-2. Group Leader
-----------------
+Group Leader 
+-----------------------
 
 ========================== =
 Methods Summary
@@ -7,10 +7,13 @@ Methods Summary
 startVirtualCluster_
 getVirtualClusterResponse_
 migrateVirtualMachine_
+getLocalControllerList_
 ========================== =
 
 
 In this section we assume that the group leader node is running on localhost.
+
+.. _startvirtualcluster:
 
 startVirtualCluster
 ###################
@@ -113,6 +116,8 @@ When using this driver, polling for the response is wrapped in the *create_node*
 
     Out << [<Node: uuid=b69042832fd33b092eb5d0211554d3c983c80ddf, name=debian1, state=RUNNING, public_ips=192.168.122.11, provider=Snooze ...>]
 
+.. _getvirtualclusterresponse:
+
 getVirtualClusterResponse
 #########################
 
@@ -190,7 +195,7 @@ Using it
     virtualClusterResponse = groupLeaderCommunicator.getVirtualClusterResponse(taskIdentifier);
 
 
-
+.. _migratevirtualmachine:
 
 migrateVirtualMachine
 #####################
@@ -242,5 +247,25 @@ Using it :
       driver.migrate(n1[0],n2[0].extra.get("virtualMachineLocation"))
 
 
+
+.. _getLocalControllerList:
+
+getLocalControllerList
+#####################
+
+Method
+******
+
+GET 
+
+Return 
+******
+
+JSON encoded Local controller list (see below).
+
+Using it :
+**********
+
+* 
 
 

@@ -7,6 +7,7 @@ Methods Summary
 startVirtualCluster_
 getVirtualClusterResponse_
 migrateVirtualMachine_
+getLocalControllerList_
 ========================== =
 
 
@@ -246,5 +247,138 @@ Using it :
       driver.migrate(n1[0],n2[0].extra.get("virtualMachineLocation"))
 
 
+
+.. _getlocalcontrollerlist:
+
+getLocalControllerList
+#####################
+
+Method
+******
+
+GET 
+
+Return 
+******
+
+JSON encoded Local controller list (see below).
+
+Using it :
+**********
+
+* Curl
+
+::
+
+    curl localhost:5000/bootstrap?getLocalControllerList
+
+::
+
+   {
+      "localControllers":[
+         {
+            "id":"f5a4a86a-e83d-4508-9ca5-ff8f5d3724e3",
+            "controlDataAddress":{
+               "address":"127.0.0.1",
+               "port":5005
+            },
+            "status":"ACTIVE",
+            "hypervisorSettings":{
+               "port":16511,
+               "driver":"qemu",
+               "transport":"tcp",
+               "migration":{
+                  "method":"live",
+                  "timeout":60
+               }
+            },
+            "totalCapacity":[
+               4.0,
+               3958348.0,
+               131072.0,
+               131072.0
+            ],
+            "virtualMachineMetaData":{
+
+            },
+            "wakeupSettings":{
+               "driver":"IPMI",
+               "options":"-I lanplus -H BMC_IP -U user -P password"
+            },
+            "hostname":"mafalda",
+            "assignedVirtualMachines":[
+
+            ]
+         },
+         {
+            "id":"496de94b-bc00-4105-8c2d-dba3797e6a2a",
+            "controlDataAddress":{
+               "address":"127.0.0.1",
+               "port":5004
+            },
+            "status":"ACTIVE",
+            "hypervisorSettings":{
+               "port":16510,
+               "driver":"qemu",
+               "transport":"tcp",
+               "migration":{
+                  "method":"live",
+                  "timeout":60
+               }
+            },
+            "totalCapacity":[
+               4.0,
+               3958348.0,
+               131072.0,
+               131072.0
+            ],
+            "virtualMachineMetaData":{
+
+            },
+            "wakeupSettings":{
+               "driver":"IPMI",
+               "options":"-I lanplus -H BMC_IP -U user -P password"
+            },
+            "hostname":"mafalda",
+            "assignedVirtualMachines":[
+
+            ]
+         },
+         {
+            "id":"9d908d25-b6af-4e3c-bd71-ca6ac290ecf6",
+            "controlDataAddress":{
+               "address":"127.0.0.1",
+               "port":5003
+            },
+            "status":"ACTIVE",
+            "hypervisorSettings":{
+               "port":16509,
+               "driver":"qemu",
+               "transport":"tcp",
+               "migration":{
+                  "method":"live",
+                  "timeout":60
+               }
+            },
+            "totalCapacity":[
+               4.0,
+               3958348.0,
+               131072.0,
+               131072.0
+            ],
+            "virtualMachineMetaData":{
+
+            },
+            "wakeupSettings":{
+               "driver":"IPMI",
+               "options":"-I lanplus -H BMC_IP -U user -P password"
+            },
+            "hostname":"mafalda",
+            "assignedVirtualMachines":[
+
+            ]
+         }
+      ]
+   }
 
 

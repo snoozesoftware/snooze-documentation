@@ -15,6 +15,7 @@ Exposed Methods
 ================================ =
 :ref:`getgroupleaderdescription`
 :ref:`getcompletehierarchy`
+:ref:`getlocalcontrollerlist`
 :ref:`startvirtualcluster`
 :ref:`getvirtualclusterresponse`
 :ref:`migratevirtualmachine`
