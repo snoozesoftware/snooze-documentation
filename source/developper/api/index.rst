@@ -10,19 +10,3 @@ API Reference
     groupmanager
     localcontroller
 
-================================ =
-Exposed Methods
-================================ =
-:ref:`getgroupleaderdescription`
-:ref:`getcompletehierarchy`
-:ref:`getlocalcontrollerlist`
-:ref:`startvirtualcluster`
-:ref:`getvirtualclusterresponse`
-:ref:`migratevirtualmachine`
-:ref:`destroyVirtualMachine`
-:ref:`rebootVirtualMachine`
-:ref:`resumeVirtualMachine`
-:ref:`shutdownVirtualMachine`
-:ref:`suspendVirtualMachine`
-================================ =
-

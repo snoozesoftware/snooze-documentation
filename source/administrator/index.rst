@@ -10,3 +10,4 @@ Administration Guide
     deployment/index
     config
     rabbitmq
+    cassandra

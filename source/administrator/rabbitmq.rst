@@ -1,3 +1,5 @@
+.. _rabbitmq:
+
 RabbitMQ
 ------------
 
