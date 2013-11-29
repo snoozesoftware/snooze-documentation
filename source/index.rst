@@ -12,7 +12,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   administrator/index
+   administrator-snoozenode/index
+   administrator-snoozeimages/index
+   administrator-snoozeec2/index
+   administrator-snoozeweb/index
    developper/index
 
   

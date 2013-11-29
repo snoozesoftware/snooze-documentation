@@ -11,6 +11,8 @@ Install rabbitmq server from the package manager of your distribution.
 
 *on debian, install rabbitmq-server*
 
+Alternatively, you can use a the ``puppetlabs/rabbitmq`` puppet module to install rabbitmq.
+
 
 2. Setup 
 ^^^^^^^^^

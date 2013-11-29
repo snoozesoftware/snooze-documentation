@@ -7,5 +7,7 @@ Developper Guide
 
     #settings/index
     python
-    api/index
+    internal_api/index
+    EC2API
     rabbitmq
+    

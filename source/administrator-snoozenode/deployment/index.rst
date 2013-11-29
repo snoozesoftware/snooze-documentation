@@ -10,6 +10,7 @@ The following sections deal with installing the core Snooze system.
     local
     cluster
     grid5000
+    puppet
 
 If you are interested in installing optionnal dependency of the Snooze Software (RabbitMQ, Cassandra...) have a look 
 here :

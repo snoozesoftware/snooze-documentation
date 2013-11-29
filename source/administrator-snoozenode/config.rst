@@ -1,5 +1,5 @@
-Snooze Config File
-------------------
+Snoozenode Config File
+----------------------
 
 Snooze system configuration is done using its main configuration file /usr/share/snoozenode/configs/snooze_node.cfg. You should be able to find it on each node after installation. It is partitioned into several categories. you can find the description of each categorie below.
 

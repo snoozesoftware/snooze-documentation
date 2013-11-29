@@ -1,9 +1,9 @@
-====================
-Administration Guide
-====================
+================================
+Snoozenode Administration Guide
+================================
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     user/cli
     user/contextualization/index
