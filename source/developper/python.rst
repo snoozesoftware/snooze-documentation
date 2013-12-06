@@ -3,6 +3,9 @@
 Python driver
 -----------------------
 
+This driver make use of the internal API. Unless you have specific requirements,
+we suggest to move to the EC2 API and the corresponding driver. 
+
 Apache Libcloud ( http://libcloud.apache.org/) driver will allow you to interact with snooze from a python script.
 
 You need the code of the apache-libcloud project :

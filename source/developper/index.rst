@@ -9,5 +9,6 @@ Developper Guide
     python
     internal_api/index
     EC2API
+    snoozeimagesAPI
     rabbitmq
     

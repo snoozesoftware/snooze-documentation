@@ -1,7 +1,7 @@
 .. _Downloads: http://snooze.inria.fr/download/
 
-Installation of the Command Line Interface
-------------------------------------------
+Installation of the Command Line Interface (deprecated)
+-------------------------------------------------------
 
 This page describes how to install, configure, and use the Snooze command-line interface (CLI). Note that for the time being the CLI installation tutorial is for Debian users only. Still as we also provide the CLI binary, with little efforts you should be able to run it on any distribution after following this tutorial.
 

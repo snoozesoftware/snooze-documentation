@@ -1,5 +1,5 @@
-Multi-Nodes Cluster on Grid'5000
---------------------------------
+Multi-Nodes Cluster on Grid'5000 (deprecated)
+----------------------------------------------
 
 Installation and Usage
 ^^^^^^^^^^^^^^^^^^^^^^

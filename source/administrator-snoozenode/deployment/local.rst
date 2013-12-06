@@ -4,7 +4,7 @@
 Single Machine Setup
 --------------------
 
-Local deployment involves running all the Snooze system components: Bootstrap Node (BN), Group Leader (GL), Group Managers (GMs), and Local Controller (LCs) as well as dependencies: Apache ZooKeeper and libvirtd on the same machine (e.g. your laptop). 
+Local deployment involves running all the Snooze system components: Bootstrap Node (BN), Group Leader (GL), Group Managers (GMs), Local Controller (LCs), Snoozeimages and SnoozeEC2,  as well as dependencies: Apache ZooKeeper, libvirtd ( and optionnally apache Cassandra and Rabbitmq) on the same machine (e.g. your laptop). 
 
 
 Hardware and OS requirement
@@ -20,7 +20,7 @@ Install the Java runtime environment, Apache ZooKeeper, and QEMU/KVM.
 
 :: 
 
-  $ apt-get install openjdk-6-jre zookeeper zookeeperd qemu-kvm libvirt-bin libvirt-dev
+  $ apt-get install openjdk-7-jre zookeeper zookeeperd qemu-kvm libvirt-bin libvirt-dev
   $ groupadd snooze
   $ useradd -s /bin/false snoozeadmin -g snooze
 
@@ -29,33 +29,52 @@ Add User *snoozeadmin* the libvirt group.
 ::
 
   (Debian)$ adduser snoozeadmin libvirt
-  (Ubuntu)$ adduser snoozeadmin libvirt
+  (Ubuntu)$ adduser snoozeadmin libvirtd
 
-Install Snooze
-^^^^^^^^^^^^^^
+Install Snooze system packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Get the latest Snooze client and node Debian packages from the Downloads_ page and install them.
 
 ::
 
-  dpkg -i snoozeclient_X.X-X_all.deb
   dpkg -i snoozenode_X.X-X_all.deb
+  dpkg -i snoozeimages_X.X-X_all.deb
+  dpkg -i snoozeec2_X.X-X_all.deb
 
 
+Configure snoozeimages according to :ref:`snoozeimages_deb` instructions.
 
 Use the local deployment script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The local deployment script is made to facilitative the start of a local cluster. Particularly, it automatically creates all the configuration files needed to run multiple Snooze and libvirt daemons on a single machine. Moreover it launches the daemons and the required dependencies (e.g. the Apache ZooKeeper service).
 
-You can get the local deployment script from the Downloads_ page (or from the `Github repository <http://github.com/snoozesoftware/snooze-deploy-localcluster/>`_). Unpack the archive and configure your Snooze deployment scenario. In other words, you need to inform the script how many BNs, GMs, and LCs you would like to run on your host. Therefore open the ./scripts/settings.sh file in localcluster subdirectory and look for the following lines.
+You can get the local deployment script from the Downloads_ page. Unpack the archive and configure your Snooze deployment scenario. In other words, you need to inform the script how many BNs, GMs, and LCs you would like to run on your host. Therefore open the *./scripts/settings.sh* file in localcluster subdirectory.
 
+First we will configure the paths to the binaries and the config file : 
+
+::
+
+  install_directory="/usr/share/snoozenode"
+  node_jar_file="$install_directory/snoozenode-2.1.0.jar"
+  node_config_file="$install_directory/configs/snooze_node.cfg"
+  node_log_file="$install_directory/configs/log4j.xml"
+
+:: 
+
+  snoozeimages_install_directory="i/usr/share/snoozeimages"
+  snoozeimages_jar_file="$snoozeimages_install_directory/snoozeimages-2.1.0.jar"
+  snoozeimages_config_file="$snoozeimages_install_directory/configs/snooze_images.cfg"
+  snoozeimages_log_file="$snoozeimages_install_directory/configs/log4j.xml"
+
+Then we will configure the deployment scenario :
 
 ::
 
   number_of_bootstrap_nodes=1
-  number_of_group_managers=3
-  number_of_local_controllers=2
+  number_of_group_managers=2
+  number_of_local_controllers=1
 
 Adopt them to your needs and you are almost done. You are now ready to instruct the script to launch the libvirtd and Snooze daemons. Note that in case you already have a libvirt and snoozenode daemon running (default installation), they needs to be stopped to avoid possible port collisions.
 
@@ -91,3 +110,14 @@ Run the script with “-l” and “-s” options to start the libvirt and Snooz
 
 You now should have your local Snooze cluster up and running. The debug outputs of the Snooze components are stored in the /tmp/ directory under the file names: snooze_node_bn.log, snooze_node_gm1.log, etc. In case you need to stop the cluster use the “-d” and “-k” options.
 
+
+SnoozeWeb
+^^^^^^^^^
+
+See :ref:`snoozeweb`
+
+If you are interested in installing optionnal dependency of the Snooze Software (RabbitMQ, Cassandra...) have a look 
+here :
+
+:ref:`rabbitmq`
+:ref:`cassandra`

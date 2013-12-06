@@ -1,3 +1,7 @@
+.. _Downloads: http://snooze.inria.fr/download/
+
+.. _snoozeweb:
+
 ====================
 Deployment
 ====================
@@ -5,11 +9,7 @@ Deployment
 The following sections deal with installing the Snoozeweb service.
 It will give you a minimal web GUI to get started with Snooze.
 
-* Clone the source repository : 
-
-::
-
-    git clone https://github.com/msimonin/snoozeweb.git
+* Get the code from the Downloads_ page and unpack it. 
 
 * Be sure to have bundle installed. Otherwise you can : 
 
@@ -17,7 +17,7 @@ It will give you a minimal web GUI to get started with Snooze.
 
     gem install bundle
 
-* On bundle is installed, run 
+* Once bundle is installed, run 
 
 ::
     
@@ -39,4 +39,7 @@ Note that if you have deployed Snooze with the *snooze-capistrano* script, you c
 
 ::
 
-    bootstrap="you bootstrap" ruby g5k.rb
+    BOOTSTRAP="you bootstrap" ruby g5k.rb
+
+The previous command assumes that your login is the same on your local machine and on grid'5000 frontend. Otherwise open *g5k.rb* and change it.
+

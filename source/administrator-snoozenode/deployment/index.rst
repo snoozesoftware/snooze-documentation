@@ -9,6 +9,7 @@ The following sections deal with installing the core Snooze system.
 
     local
     cluster
+    grid5000capistrano
     grid5000
     puppet
 
