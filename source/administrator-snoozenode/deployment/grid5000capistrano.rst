@@ -1,28 +1,47 @@
+.. _Downloads: http://snooze.inria.fr/download/
+
 Multi-Nodes Cluster on Grid'5000 using capistrano.
 --------------------------------------------------
 
 This page deals with the deployment of the Snoozenode, Snoozeimages and SnoozeEC2 system services. 
 
+Get the deployment script
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The prefer way of getting the code is to clone the repository.
+
+::
+
+  git clone https://github.com/msimonin/snooze-capistrano.git
+
+Move to the release ( tag ) of you choice with : 
+
+::
+
+  cd snooze-capistrano
+  git checkout vx.x.x
+
+
+Alternatively you can get it from the Downloads_ page and install it.
+
 Have a correct ruby environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This deployment assumes that ruby 1.9.3 and bundler installed. Check rvm if you need to deal with several ruby environments.
-Once it's done, you just have to launch :
+This deployment assumes that ruby >= 1.9.3 and require bundler gem.
+
+Install bundler
+
+:: 
+
+  gem install bundler
+
+Check rvm if you need to deal with several ruby environments.
+
+Once it's done, you just have to launch in the *snooze-capistrano* directory:
 
 ::
 
     bundle install
-
-Check available tasks
-^^^^^^^^^^^^^^^^^^^^^
-
-Different tasks are available for the different version of the snooze software.
-
-For the latest stable version of Snooze
-
-::
-
-  cap -T 
 
 
 Check the deployment parameters
@@ -38,6 +57,7 @@ You'll need to tell to the script what tool need to be used to generate this iso
 Note : yes, I know it is not very practical, and should be changed in the next version of the script.
 
 * Open *config/deploy/xp5k/xp5k_[version]* to check the deployment parameters (number of nodes, walltime ...)
+
 
 Automatic deployment
 ^^^^^^^^^^^^^^^^^^^^
@@ -62,6 +82,8 @@ Please refer to :ref:`snoozeweb` to install the web interface.
 
 Overview of the tasks available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* cap -T will give you the available tasks for your deployment.
 
 ::
 
