@@ -135,7 +135,7 @@ Basic usage
 
 If you want to change a snoozenode parameter:
 
-* Check the file *recipes/snooze/recipe.rb*
+* Check the file *recipes/snooze/templates/snoozenode.erb*
 
 * Make your change
 
