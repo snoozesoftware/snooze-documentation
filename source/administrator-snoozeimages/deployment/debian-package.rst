@@ -93,3 +93,4 @@ In order to make sure that the snoozeimages is running properly you can check th
 ::
 
   curl localhost:4000/images
+

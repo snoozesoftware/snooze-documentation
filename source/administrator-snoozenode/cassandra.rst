@@ -15,6 +15,17 @@ Install cassandra from the package manager of your distribution.
 
 Alternatively you can use a proper puppet module.
 
+2. Upload the schema
+^^^^^^^^^^^^^^^^^^^^
+
+You will find the schema of the database in the Downloads_ page.
+Load it into cassandra : 
+
+::
+
+  cassandra-cli -f schemup.cas
+
+This will create all the column families needed by Snooze.
 
 2. Setup 
 ^^^^^^^^^
