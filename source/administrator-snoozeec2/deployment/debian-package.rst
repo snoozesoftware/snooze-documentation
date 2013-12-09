@@ -1,5 +1,5 @@
-Debian package
---------------
+SnoozeEC2 Debian package
+-------------------------
 
 Installation
 ^^^^^^^^^^^^

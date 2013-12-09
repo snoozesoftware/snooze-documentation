@@ -11,4 +11,6 @@ Snoozeimages has a RESTful API that allows querying of VM image metadata.
     :maxdepth: 1
 
     deployment/index
+    config
+    instances
 

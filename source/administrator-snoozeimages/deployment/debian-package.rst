@@ -19,14 +19,16 @@ Install also libvirt.
   apt-get install libvirt
 
 
-Files
-^^^^^
 
-The snoozeimages files reside in */usr/share/snoozeimages* 
-and the init script in */etc/init.d/snoozeimages*.
+Libvirt pool Backend
+^^^^^^^^^^^^^^^^^^^^^
+
+Snoozeimages can be configured to use libvirt pool as a storage backend. 
+Thus you need to configure a libvirt instance in order for the snoozeimages
+service to connnect to.
 
 Configure a pool to serve virtual machine images
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Usually, a *default* pool exists once libvirt is install. You can check by typing : 
 
@@ -49,12 +51,20 @@ If no pool exists, create one.
   virsh pool-build [pool-name]
   virsh pool-start [pool-name]
 
+Configure snoozeimages to connect to libvirt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configuration file can be found in */usr/share/snoozeimages/configs*.
+
 Once the pool is started, fill the config */usr/share/snoozeimages/configs/snooze_images.cfg* with the appropriate pool name.
+
 
 Run the service
 ^^^^^^^^^^^^^^^
 
-* You can launch the snoozeimages daemon with  :
+* Run the libvirt instance.
+
+* Launch the snoozeimages daemon with  :
 
 ::
  
@@ -70,3 +80,16 @@ It will takes default the logger configuration file in
     java -jar path_to_snoozeimages_jar cfgFile logFile
 
 The snoozeimages jar can be found in /usr/share/snoozeimages/
+
+
+Check your deployment
+^^^^^^^^^^^^^^^^^^^^^
+
+In order to make sure that the snoozeimages is running properly you can check the following : 
+
+* log file, by default located in /tmp/snoozeimages.log
+* submit a *curl* command to the service : 
+
+::
+
+  curl localhost:4000/images

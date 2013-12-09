@@ -63,7 +63,7 @@ First we will configure the paths to the binaries and the config file :
 
 :: 
 
-  snoozeimages_install_directory="i/usr/share/snoozeimages"
+  snoozeimages_install_directory="/usr/share/snoozeimages"
   snoozeimages_jar_file="$snoozeimages_install_directory/snoozeimages-2.1.0.jar"
   snoozeimages_config_file="$snoozeimages_install_directory/configs/snooze_images.cfg"
   snoozeimages_log_file="$snoozeimages_install_directory/configs/log4j.xml"
@@ -111,10 +111,33 @@ Run the script with “-l” and “-s” options to start the libvirt and Snooz
 You now should have your local Snooze cluster up and running. The debug outputs of the Snooze components are stored in the /tmp/ directory under the file names: snooze_node_bn.log, snooze_node_gm1.log, etc. In case you need to stop the cluster use the “-d” and “-k” options.
 
 
+Check your deployment
+^^^^^^^^^^^^^^^^^^^^^
+* First of all, logs files should have been created in */tmp/snooze\*.log*.
+  You can check the content of these files
+ 
+* Test your snoozeimages installation by submitting a  *curl* command : 
+
+::
+
+  curl localhost:4000/images
+
+It should return the list of the images in the pool configured in snoozeimages configuration file.
+
+
 SnoozeWeb
 ^^^^^^^^^
 
 See :ref:`snoozeweb`
+
+Extra
+^^^^^
+
+* Configuring properly rabbitmq will provide you real time infrastructure
+  plotting in the snooze web interface (based on web sockets).
+* By configuring Cassandra you will benefits from a reliable database
+  to store a huge amount of monitoring datas and it will enable more features
+  in the snoozeweb interface.
 
 If you are interested in installing optionnal dependency of the Snooze Software (RabbitMQ, Cassandra...) have a look 
 here :

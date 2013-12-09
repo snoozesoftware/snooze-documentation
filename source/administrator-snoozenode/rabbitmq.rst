@@ -1,3 +1,5 @@
+.. _plugins: http://www.rabbitmq.com/web-stomp.html
+
 .. _rabbitmq:
 
 RabbitMQ
@@ -38,5 +40,11 @@ Setup user and vhost accordingly to the *snooze_node.cfg* parameters :
   rabbitmqctl add_vhost snooze-vhost
   rabbitmqctl set_permissions -p snooze-vhost snooze ".*" ".*" ".*"
 
+For further documentation about the message format used : see :ref:`rabbitmq-message-format`
 
-see :ref:`rabbitmq-message-format`
+3. Enable extra plugins
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Snooze web makes use of the stomp protocol to plot the hierarchy real time.
+You will need to install the *web stomp plugin* in order to activate this feature
+See the plugins_ page for instructions.

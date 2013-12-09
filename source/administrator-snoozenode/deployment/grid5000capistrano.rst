@@ -131,8 +131,3 @@ If you want to change a snoozenode parameter:
 ::
 
   cap snooze:cluster:stop snooze:provision snooze:cluster:start
-
-
-
-
-
