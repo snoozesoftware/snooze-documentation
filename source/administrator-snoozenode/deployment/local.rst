@@ -57,14 +57,14 @@ First we will configure the paths to the binaries and the config file :
 ::
 
   install_directory="/usr/share/snoozenode"
-  node_jar_file="$install_directory/snoozenode-2.1.0.jar"
+  node_jar_file="$install_directory/snoozenode.jar"
   node_config_file="$install_directory/configs/snooze_node.cfg"
   node_log_file="$install_directory/configs/log4j.xml"
 
 :: 
 
   snoozeimages_install_directory="/usr/share/snoozeimages"
-  snoozeimages_jar_file="$snoozeimages_install_directory/snoozeimages-2.1.0.jar"
+  snoozeimages_jar_file="$snoozeimages_install_directory/snoozeimages.jar"
   snoozeimages_config_file="$snoozeimages_install_directory/configs/snooze_images.cfg"
   snoozeimages_log_file="$snoozeimages_install_directory/configs/log4j.xml"
 
