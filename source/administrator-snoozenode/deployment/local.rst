@@ -52,7 +52,7 @@ The local deployment script is made to facilitative the start of a local cluster
 
 You can get the local deployment script from the Downloads_ page. Unpack the archive and configure your Snooze deployment scenario. In other words, you need to inform the script how many BNs, GMs, and LCs you would like to run on your host. Therefore open the *./scripts/settings.sh* file in localcluster subdirectory.
 
-First we will configure the paths to the binaries and the config file : 
+First we will check the paths to the binaries and the config file : 
 
 ::
 
@@ -76,7 +76,7 @@ Then we will configure the deployment scenario :
   number_of_group_managers=2
   number_of_local_controllers=1
 
-Adopt them to your needs and you are almost done. You are now ready to instruct the script to launch the libvirtd and Snooze daemons. Note that in case you already have a libvirt and snoozenode daemon running (default installation), they needs to be stopped to avoid possible port collisions.
+Adapt them to your needs and you are almost done. You are now ready to instruct the script to launch the libvirtd and Snooze daemons. Note that in case you already have a libvirt and snoozenode daemon running (default installation), they needs to be stopped to avoid possible port collisions.
 
 
 ::

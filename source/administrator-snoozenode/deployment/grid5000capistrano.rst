@@ -27,7 +27,7 @@ Alternatively you can get it from the Downloads_ page and install it.
 Have a correct ruby environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This deployment assumes that ruby >= 1.9.3 and require bundler gem.
+This deployment assumes that ruby >= 1.9.3 and requires bundler gem.
 
 Install bundler
 
@@ -81,6 +81,9 @@ You're now ready to launch the deployment :
 
   cap  automatic
 
+
+Note : I'll have to remove the previously created *.xp_cache* before resubmitting new jobs.
+
 And to start snooze cluster with : 
 
 ::
@@ -129,18 +132,75 @@ Overview of the tasks available
   cap submit                  # Submit jobs
   cap v2.1.0                  # Set the target stage to `v2.1.0'.
 
-
 Basic usage
 ^^^^^^^^^^^
 
-If you want to change a snoozenode parameter:
+==========================  ========================================
+I would like to change ...  file
+==========================  ========================================
+My ssh keys                 config/deploy.rb
+The site                    config/deploy.rb
+The walltime                config/deploy.rb
+The number of nodes         config/xp5k/xp5k_2.x.x.rb
+The snooze parameters       recipes/snooze/templates/snoozenode.erb
+==========================  ========================================
 
-* Check the file *recipes/snooze/templates/snoozenode.erb*
-
-* Make your change
-
-* stop, provision and restart your cluster : 
+After changing the snooze parameters you can invoke :
 
 ::
 
   cap snooze:cluster:stop snooze:provision snooze:cluster:start
+
+It will reprovision the cluster and restart it with the new parameters.
+
+If you need to change the topology (eg : number of groupmanagers), you will have to redeploy the whole clutser.
+
+Customize deployment
+^^^^^^^^^^^^^^^^^^^^
+
+If you would like to add steps in the deployment (typically at the end of the original deployment) 
+a good practice is to add a new stage in the capistrano deployment process.
+
+* Create a new stage by copying an existing one : 
+
+::
+
+  cp config/deploy/v2.1.0.rb config/deploy/mystage.rb
+
+and add it to capistrano in the *config/deploy.rb* in the line :
+
+:: 
+
+  set :stages, %w(... mystage ...)
+  set :default_stage, "mystage" # optional
+
+Now *cap mystage command* or *cap v2.1.0 command* since you have copied *v2.1.0.rb*.
+
+Setting mystage as default stage will allow you to invoke *command* without specifying which state you want : *cap command*
+
+* Add your recipe in *mystage.rb* :
+
+::
+
+  recipes = [..., ..., ..., myrecipe]
+  [...]
+  after ..., ..., ..., myrecipe
+
+You just have to create your recipe under *recipes/recipe/myrecipe/recipe.rb* and it will be invoked at the end of the deployment.
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
