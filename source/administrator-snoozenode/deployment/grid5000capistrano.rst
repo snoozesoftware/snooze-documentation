@@ -12,7 +12,7 @@ The prefer way of getting the code is to clone the repository.
 
 ::
 
-  git clone https://github.com/msimonin/snooze-capistrano.git
+  git clone git://github.com/msimonin/snooze-capistrano.git
 
 Move to the release ( tag ) of you choice with : 
 
@@ -43,6 +43,19 @@ Once it's done, you just have to launch in the *snooze-capistrano* directory:
 
     bundle install
 
+Configure Restfully
+^^^^^^^^^^^^^^^^^^^
+
+The script makes use of Restfully to manage connections to the Grid'5000 API.
+
+Create the file *~/.restfully/api.grid5000.fr.yml* with this content : 
+
+::
+
+  uri: https://api.grid5000.fr/stable/grid5000
+  username: login
+  password: xxxxx
+
 
 Check the deployment parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -56,7 +69,7 @@ You'll need to tell to the script what tool need to be used to generate this iso
 
 Note : yes, I know it is not very practical, and should be changed in the next version of the script.
 
-* Open *config/deploy/xp5k/xp5k_[version]* to check the deployment parameters (number of nodes, walltime ...)
+* Open *config/deploy/xp5k/xp5k_[version]* to check the deployment parameters (number of nodes ...)
 
 
 Automatic deployment
