@@ -1,3 +1,6 @@
+
+.. _contextualization:
+
 ========================
 Build new VM images
 ========================

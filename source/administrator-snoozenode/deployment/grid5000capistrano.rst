@@ -14,12 +14,12 @@ The prefer way of getting the code is to clone the repository.
 
   git clone git://github.com/msimonin/snooze-capistrano.git
 
-Move to the release ( tag ) of you choice with : 
+Move to the release ( tag ) of your choice with : 
 
 ::
 
   cd snooze-capistrano
-  git checkout vx.x.x
+  git checkout v2.1.1
 
 
 Alternatively you can get it from the Downloads_ page and install it.
@@ -84,17 +84,25 @@ You're now ready to launch the deployment :
 
 Note : I'll have to remove the previously created *.xp_cache* before resubmitting new jobs.
 
-And to start snooze cluster with : 
-
-::
-
-  cap snooze:cluster:start
-
 
 Web Interface
 ^^^^^^^^^^^^^
 
-Please refer to :ref:`snoozeweb` to install the web interface.
+The web interface is installed on the bootstrap node at the end of the deployment. 
+Assuming that the bootsrap node is *paradent-4*, open you browser and connect to the following url : 
+
+::
+
+  https://paradent-4.rennes.proxy-http.grid5000.fr
+
+
+AMQP messages can be captured by the browser to display and update the system hierarchy. 
+You just have to create a ssh tunnel from your local machine to the bootstrap node (hosting the rabbitmq broker).
+
+::
+
+  ssh -NL 55674:bootstrap:55674 login@access.grid5000.fr
+  
 
 Overview of the tasks available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

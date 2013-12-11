@@ -62,8 +62,18 @@ Generate the context.iso file :
 
     ($) genisoimage -RJ -o context.iso context
 
-Generate the virtual machine template
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Share this context file to your virtual machines
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The file *context.iso* created above must be available to your virtual machines. 
+You can move it to the pool you configured for the snoozeimages service. 
+
+You can now start your virtual machine with the GUI, or with the libcloud EC2 driver (if snoozeec2 is enable), or through the internal API.
+
+
+Generate the virtual machine template (deprecated)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Assumed that the name of your backing file is debian-base.raw, you will need to execute the following command to create a COW image debian1.qcow2.
 

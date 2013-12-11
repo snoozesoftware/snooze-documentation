@@ -130,6 +130,13 @@ SnoozeWeb
 
 See :ref:`snoozeweb`
 
+How to submit virtual machines ?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First read :ref:`contextualization` section to understand how contextualization works with snooze.
+Basically you have to generate an iso (*context.iso*) file and make it available from all the virtual machines.
+This iso file contains the network settings used by your virtual machines.
+
 Extra
 ^^^^^
 
