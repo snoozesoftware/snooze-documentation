@@ -24,6 +24,9 @@ Move to the release ( tag ) of your choice with :
 
 Alternatively you can get it from the Downloads_ page and install it.
 
+Note that not checking out a particular tag will give you the latest version (not released yet and thus under development).
+
+
 Have a correct ruby environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -52,9 +55,9 @@ Create the file *~/.restfully/api.grid5000.fr.yml* with this content :
 
 ::
 
-  uri: https://api.grid5000.fr/stable/grid5000
-  username: login
-  password: xxxxx
+  base_uri: https://api.grid5000.fr/stable/grid5000
+  username: "login"
+  password: "xxxxx"
 
 
 Check the deployment parameters
@@ -102,7 +105,10 @@ You just have to create a ssh tunnel from your local machine to the bootstrap no
 ::
 
   ssh -NL 55674:bootstrap:55674 login@access.grid5000.fr
-  
+
+
+Alternatively, if something went wrong during the deployment of the web interface. You can follow :ref:`snoozeweb`
+to install this interface on your local machine.
 
 Overview of the tasks available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -197,12 +203,156 @@ Setting mystage as default stage will allow you to invoke *command* without spec
 You just have to create your recipe under *recipes/recipe/myrecipe/recipe.rb* and it will be invoked at the end of the deployment.
 
 
+Directory Structure
+^^^^^^^^^^^^^^^^^^^
+
+::
+
+  Capfile
+  ├── config
+  │   ├── deploy
+  │   │   ├── experimental.rb
+  │   │   ├── latest.rb
+  │   │   ├── master.rb
+  │   │   ├── sandbox.rb
+  │   │   └── xp5k
+  │   │       ├── xp5k_2.x.rb
+  │   │       ├── xp5k_common_roles.rb
+  │   │       ├── xp5k_common_tasks.rb
+  │   │       ├── xp5k_master.rb
+  │   │       ├── xp5k_sandbox.rb
+  │   │       └── xp5k_testing.rb
+  │   ├── deploy.rb
+  │   └── lib
+  │       └── spinner.rb
+  ├── Gemfile
+  ├── Gemfile.lock
+  ├── README.md
+  ├── recipes
+  │   ├── cassandra
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── schema
+  │   │   │   ├── schemadown.cas
+  │   │   │   └── schemaup.cas
+  │   │   ├── templates
+  │   │   │   └── cassandra.erb
+  │   │   └── tmp
+  │   │       ├── cassandra.pp
+  │   │       └── readme.txt
+  │   ├── dfs
+  │   │   ├── module
+  │   │   │   └── manifests
+  │   │   │       └── init.pp
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   ├── dfs-client.erb
+  │   │   │   └── glusterfs.erb
+  │   │   └── tmp
+  │   │       └── readme.txt
+  │   ├── keystone
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   ├── keystone.erb
+  │   │   │   └── keystone.erb~
+  │   │   └── tmp
+  │   │       ├── keystone.pp
+  │   │       ├── rabbitmq.pp
+  │   │       └── readme.txt
+  │   ├── nfs
+  │   │   ├── module
+  │   │   │   ├── files
+  │   │   │   │   └── etc
+  │   │   │   │       └── idmapd.conf
+  │   │   │   └── manifests
+  │   │   │       ├── init.pp
+  │   │   │       └── server.pp
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   ├── nfs-client.erb
+  │   │   │   ├── nfs_server.erb
+  │   │   │   └── nfs-server.erb
+  │   │   └── tmp
+  │   │       ├── nfs-client.pp
+  │   │       ├── nfs-server.pp
+  │   │       └── readme.txt
+  │   ├── rabbitmq
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   └── rabbitmq.erb
+  │   │   └── tmp
+  │   │       ├── rabbitmq.pp
+  │   │       └── readme.txt
+  │   ├── snooze
+  │   │   ├── network
+  │   │   │   ├── configure_network.sh
+  │   │   │   ├── context
+  │   │   │   │   ├── common
+  │   │   │   │   │   ├── network
+  │   │   │   │   │   └── routes
+  │   │   │   │   ├── context.sh
+  │   │   │   │   ├── distributions
+  │   │   │   │   │   └── debian
+  │   │   │   │   │       └── 00_network
+  │   │   │   │   ├── init.sh
+  │   │   │   │   ├── lib
+  │   │   │   │   │   ├── functions
+  │   │   │   │   │   └── mac-ip.cfg
+  │   │   │   │   └── post-install
+  │   │   │   └── interfaces
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   ├── network.erb
+  │   │   │   └── snoozenode.erb
+  │   │   └── tmp
+  │   │       ├── bootstrap.pp
+  │   │       ├── context.iso
+  │   │       ├── groupmanager.pp
+  │   │       ├── localcontroller.pp
+  │   │       └── readme.txt
+  │   ├── snoozeec2
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   └── snoozeec2.erb
+  │   │   └── tmp
+  │   │       ├── readme.txt
+  │   │       └── snoozeec2.pp
+  │   ├── snoozeimages
+  │   │   ├── output.rb
+  │   │   ├── recipe.rb
+  │   │   ├── roles.rb
+  │   │   ├── templates
+  │   │   │   └── snoozeimages.erb
+  │   │   └── tmp
+  │   │       ├── readme.txt
+  │   │       └── snoozeec2.pp
+  │   └── snooze_webinterface
+  │       ├── output.rb
+  │       ├── recipe.rb
+  │       ├── roles.rb
+  │       └── tmp
+  │           └── readme.txt
+  ├── xp.conf
+  └── xp.log
 
 
 
 
 
-  
+    
 
 
 

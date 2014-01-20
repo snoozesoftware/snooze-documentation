@@ -710,10 +710,27 @@ Input data
 You must provide a JSON encoded hash in the body of your request which\
 correspond to the ClientMigrationRequestSimple java object. 
 
+::
+
+  {
+    "virtualMachineId": "vm_0",
+    "localControllerId": "fba454bf-2688-44c5-bdb4-08478c9a5176"
+  }
+
 Returns
 *******
 
 boolean
+
+Examples
+********
+
+The following command will migrate the virtualmachine *vm_0* to localcontroller whose id is *fba454bf...*.
+
+::
+
+    curl -X 'POST' -H "Content-type: application/json" -d '{"virtualMachineId": "vm_0", "localControllerId": "fba454bf-2688-44c5-bdb4-08478c9a5176"}' http://parapide-2:5000/bootstrap?migrateVirtualMachine
+
 
 .. _rebootvirtualmachine:
 
@@ -812,9 +829,19 @@ You must provide a JSON encoded hash in the body of your request that must conta
 
 virtualMachineTemplate must contain the following parameters:
 
-* libVirtTemplate : xml string representing the virtual machine to start
+* libVirtTemplate : xml string representing the virtual machine to start.
+
+  This parameters is optional if *vcpus*, *memory*, *imageId* and *name* are given.
 
 * networkCapacityDemand : hash which parameters are rxBytes and txBytes.
+  
+* vcpus : number of vcpus of the virtual machine.
+
+* memory : amount of memory of the virtual machine.
+
+* imageId : the disk image id of the virtual machine to boot from.
+
+* name : name of the virtual machine.
 
 A example is given below with one virtual machine: 
 

@@ -30,11 +30,21 @@ You must provide a JSON encoded hash in the body of your request that must conta
 
 virtualMachineTemplate must contain the following parameters:
 
-* libVirtTemplate : xml string representing the virtual machine to start
+* libVirtTemplate : xml string representing the virtual machine to start.
+
+  This parameters is optional if *vcpus*, *memory*, *imageId* and *name* are given.
 
 * networkCapacityDemand : hash which parameters are rxBytes and txBytes.
+  
+* vcpus : number of vcpus of the virtual machine.
 
-A example is given below with one virtual machine: 
+* memory : amount of memory of the virtual machine.
+
+* imageId : the disk image id of the virtual machine to boot from.
+
+* name : name of the virtual machine.
+
+A example is given below with one virtual machine : 
 
 ::
 
