@@ -23,7 +23,7 @@ Load it into cassandra :
 
 ::
 
-  cassandra-cli -f schemup.cas
+  cassandra-cli -f schemaup.cas
 
 This will create all the column families needed by Snooze.
 

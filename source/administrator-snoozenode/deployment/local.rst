@@ -11,7 +11,9 @@ Hardware and OS requirement
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Networking connection for multicast
 * Hardware supporting the KVM hypervisor 
-* Debian wheezy or Ubuntu (12.04 or newer)
+* Debian wheezy or Ubuntu (12.04 or newer) 
+
+Note that snooze is written in java, so any linux flavour should be able to run the system.
 
 Prepare the environment
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -44,6 +46,8 @@ Get the latest Snooze client and node Debian packages from the Downloads_ page a
 
 
 Configure snoozeimages according to :ref:`snoozeimages_deb` instructions.
+
+Note that alternatively you can install the jar files from the release download page.
 
 Use the local deployment script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -124,11 +128,16 @@ Check your deployment
 
 It should return the list of the images in the pool configured in snoozeimages configuration file.
 
+How to change parameters
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-SnoozeWeb
-^^^^^^^^^
+If you want to change some parameters in the configuration file open the file pointed by *$snoozeimages_config_file*. By default it should be */usr/share/snoozenode/configs/snooze_node.cfg*.
+Make your changes and apply them by restarting the cluster.
 
-See :ref:`snoozeweb`
+::
+
+  $ ./start_local_cluster.sh -k
+  $ ./start_local_cluster.sh -s
 
 How to submit virtual machines ?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -140,6 +149,7 @@ This iso file contains the network settings used by your virtual machines.
 Extra
 ^^^^^
 
+* Configuring the snoozeweb will allow you to have a web gui for managing Snooze.
 * Configuring properly rabbitmq will provide you real time infrastructure
   plotting in the snooze web interface (based on web sockets).
 * By configuring Cassandra you will benefits from a reliable database
@@ -149,5 +159,8 @@ Extra
 If you are interested in installing optionnal dependency of the Snooze Software (RabbitMQ, Cassandra...) have a look 
 here :
 
+:ref:`snoozeweb`
+
 :ref:`rabbitmq`
+
 :ref:`cassandra`

@@ -2,8 +2,8 @@
 
 .. _snoozeweb:
 
-Deployment of Snoozeweb
-------------------------
+Snoozeweb
+----------
 
 The following sections deal with installing the Snoozeweb service.
 It will give you a minimal web GUI to get started with Snooze.
