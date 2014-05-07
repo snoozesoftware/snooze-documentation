@@ -190,4 +190,5 @@ You can use the client to visualize the current hierarchy state (GL, GMs, LCs, V
 
 ::
 
-    ($) snoozeclient dump 
+    ($) snoozeclient dump
+
