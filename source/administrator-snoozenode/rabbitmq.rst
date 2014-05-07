@@ -1,4 +1,4 @@
-.. _plugins: http://www.rabbitmq.com/web-stomp.html
+.. _rplugins: http://www.rabbitmq.com/web-stomp.html
 
 .. _rabbitmq:
 
@@ -47,4 +47,4 @@ For further documentation about the message format used : see :ref:`rabbitmq-mes
 
 Snooze web makes use of the stomp protocol to plot the hierarchy real time.
 You will need to install the *web stomp plugin* in order to activate this feature
-See the plugins_ page for instructions.
+See the rplugins_ page for instructions.

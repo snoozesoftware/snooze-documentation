@@ -17,6 +17,7 @@ Contents:
    administrator-snoozeec2/index
    administrator-snoozeweb/index
    developper/index
+   advanced_developper/index
 
   
 

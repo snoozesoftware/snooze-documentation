@@ -1,3 +1,6 @@
+
+.. _configfile:
+
 Snoozenode Config File
 ----------------------
 
@@ -144,9 +147,33 @@ The amount of time above which monitoring data is considered as lost. Note that 
 
 Overload and underload anomaly detection is performed based on aggregates. Particularly, each LC first collects a certain amount of monitoring data entries per VM period starting the anomaly detection. You can control this amount using this parameter.
 
-* *monitoring.thresholds.*
+* *monitoring.thresholds.<resource>*
 
 For each resource (i.e. CPU, memory, and network) Snooze defines three thresholds (MIN, MID, and MAX). When the aggregated utilization in one of the resources falls below the MIN threshold the LC is considered underloaded. Similarly, if the utilization crosses the MAX threshold the LC is considered overloaded. The MID threshold is used to cap the max allowed used resource capacity. This allows to keep a buffer of spare resources to compensate during periods of high resource contention. For example if set to 0.5 at max 50% of the available resource capacity will be available to host VMs.
+
+Example : 
+
+  monitoring.thresholds.cpu = 0, 1, 1
+
+  monitoring.thresholds.memory = 0, 1, 1
+
+  monitoring.thresholds.network = 0, 1, 1
+
+  *monitoring.estimator.<resource>*
+
+You can implement different estimators for each resource and choose between them using this parameter. Estimations are currently made using *estimator.numberOfMonitoringEntries* values.
+
+Example : 
+   # This will use the built-in average estimator. 
+
+   monitoring.estimator.cpu = average 
+
+   # This is equivalent to specifying the fully qualified name of the estimator class
+
+   monitoring.estimator.cpu = org.inria.myriads.snoozenode.groupmanager.estimator.api.impl.AverageCPUDemandEstimator
+
+   # For a custom estimator (see :ref:`plugins`) you'll have to specify the fqn as above. 
+
 
 External Notifier
 ^^^^^^^^^^^^^^^^^
@@ -176,30 +203,43 @@ Rabbitmq virtual host.
 Estimation
 ^^^^^^^^^^^
 
-* *estimator.static* 
+Estimator is used for all estimation of the nodes (groupmanagers, localcontrollers, virtualmachines), thus it plays a key role in placement, consolidation, anomaly detection/resolution...
 
-True if estimations should be based on static values only. Particularly, if your VM requests 3 GB of RAM during submission but uses on average 2 GB only according to the collected monitoring data, the estimator would still consider the requested capacity when requested to do estimations.
+* *estimator* 
 
-* *estimator.sortNorm* 
-
-Sorting VMs requires their resource usage vectors to be mapped to scalar values. Therefore different vector norms (e.g. L1, Euclid, Max) can be used.
+  Possible values are : staticdynamic (default) or fqn of the estimaton class (see :ref:`plugins`)
 
 * *estimator.numberOfMonitoringEntries* 
 
  The maximum number of monitoring entries per VM to consider in estimations. For example, it is possible to instruct the system to use the most recent 15 monitoring entries per VM in its estimations.
 
-* *estimator.policy.* 
+* *estimator.options*
+  One line json (key, values).
 
-You can implement different estimators for each resource and choose between them using this parameter. Currently, estimations are based on averages of estimator.numberOfMonitoringEntries most recent values.
+Example : for the staticdynamic 
+
+*estimator.options* = {"static": "true", "sortNorm" : "L1", "packingDensityCpu": 1, "packingDensityMemory": 1, "packingDensityNetwork": 1}
+
+static:true means that estimations should be based on static values only. Particularly, if your VM requests 3 GB of RAM during submission but uses on average 2 GB only according to the collected monitoring data, the estimator would still consider the requested capacity when requested to do estimations.
+
+Sorting VMs requires their resource usage vectors to be mapped to scalar values. Therefore different vector norms (e.g. L1, Euclid, Max) can be used.
+
+You can define a packing density for each resource. It will be considered during initial VM placement and allow the VM to be hosted on a LC despite existing MID capping. For example, of a LC has 4 PCORES and the CPU MID threshold (monitoring.thresholds.cpu) is set to 0.5 it is only possible to load it for up to 2 PCORES, keeping two other cores as buffered capacity. If a VM is now submitted which requires 4 VCORES it impossible to place it on the LC. However, with the packing density set to 0.4 it will be considered as a VM requiring only 1.6 VCORES thus allowing it to be placed. Note that packing density < 1 facilitates resource overcommit and thus can lead to serious performance problems. We suggest to keep it at the default value (=1) in case performance is important.
+
+
 
 Group Leader Scheduler
 ^^^^^^^^^^^^^^^^^^^^^^
 
 * *groupLeaderScheduler.assignmentPolicy* 
 
+Possible values are *random*, *roundrobin* or the fully qualified name of the assignement policy (see :ref:`plugins`).
+
  When a LC attempts to join the hierarchy it needs to know which GM to join. The assignment policy is in charge of selecting the GM. Currently two assignment policies are implemented: RoundRobin and FirstFit. You can integrate you own assignment policies by implementing the provided assignment interface.
 
 * *groupLeaderScheduler.dispatchingPolicy*
+
+Possible values are *firstfit*, *roundrobin* or the fully qualified name of the dispatching policy (see :ref:`plugins`).
 
 When a client attempts to submit a VC, its VMs need to be dispatched to GMs. The dispatching policy makes the GM choice according to the aggregated GM monitoring data. Currently two dispatching policies are implemented: RoundRobinSingleGroupManager and FirstFitSingleGroupManager. 
 
@@ -213,7 +253,12 @@ Group manager scheduler
 
 * *groupManagerScheduler.placementPolicy*
 
-The placement policy is used to do initial assignment’s of VMs to LCs upon submission. Currently, two placement policies exist RoundRobin and FirstFit
+Possible values are *firstfit*, *roundrobin* or the fully qualified name of the dispatching policy (see :ref:`plugins`).
+
+The placement policy is used to do initial assignment’s of VMs to LCs upon submission. Default installation comprises Two placement policies : RoundRobin and FirstFit. 
+You can write your own placement policy (see :ref:`plugins`). You can load your specific placement policy by specifying the fully qualified name of your class : 
+
+*groupManagerScheduler.placementPolicy=org.inria.myriads.snoozenode.groupmanager.managerpolicies.placement.impl.MyPlacement*
 
 * *groupManagerScheduler.relocation.* 
 
@@ -226,8 +271,8 @@ Complementary to the relocation mechanisms, reconfiguration can be enabled to pe
 * *groupManagerScheduler.reconfiguration.policy*
 
 You can implement any reconfiguration policy. However, currently Snooze implements a modified version of the Sercon consolidation algorithm. Please refer to Publications for more details.
-
 * *groupManagerScheduler.reconfiguration.interval*
+
 
 A cron expression which allows to provide a very flexible configuration of the reconfiguration interal (e.g. every night at 1 AM).
 
@@ -244,12 +289,6 @@ Collection parameters control the VC submission response gathering. Particularly
 
 
 Similarly to dispatching two parameters exist to control the response gather behavior: numberOfRetries and retryInterval. The number of retries parameter makes sure that polling terminates in case when the responses never become available due to internal errors while the retry interval specifies the polling period.
-
-
-* *submission.packingDensity.*
-
- You can define a packing density for each resource. It will be considered during initial VM placement and allow the VM to be hosted on a LC despite existing MID capping. For example, of a LC has 4 PCORES and the CPU MID threshold (monitoring.thresholds.cpu) is set to 0.5 it is only possible to load it for up to 2 PCORES, keeping two other cores as buffered capacity. If a VM is now submitted which requires 4 VCORES it impossible to place it on the LC. However, with the packing density set to 0.4 it will be considered as a VM requiring only 1.6 VCORES thus allowing it to be placed. Note that packing density < 1 facilitates resource overcommit and thus can lead to serious performance problems. We suggest to keep it at the default value (=1) in case performance is important.
-
 
 Energy Management
 ^^^^^^^^^^^^^^^^^
@@ -286,3 +325,110 @@ The time to wait in seconds until a LC is considered active. Note that it is cru
 Sometimes the implemented drivers commands can be fragile and block the system if they do not terminate correctly. You can use the command execution timeout to force termination after a predefined number of seconds. Note that it is important to keep this value high enough in order to prevent situations where driver commands are aborted too early.
 
 
+Host Monitoring
+^^^^^^^^^^^^^^^
+
+This section deals with the metric collection of the localcontrollers nodes.
+
+* *localController.hostmonitor*
+
+ Declares your monitor(s) as string separated values.
+
+ Example : 
+
+ *localController.hostmonitor = ganglia1, libvirt, ganglia2*
+
+* *localController.hostmonitor.interval*
+
+Collection interval. Can be overriden.
+
+
+* *localController.hostmonitor.numberOfMonitoringEntrie*
+
+Number of metrics to keep. can be overriden.
+
+
+* *localController.hostmonitor.estimator*
+
+Possible values are *average* or the fully qualified name of the host estimator class (see :ref:`plugins`)
+
+Estimator to use for the collected metrics. Can be overriden.
+
+* *localController.hostmonitor.<monitor>*
+
+Possible values are *ganglia* or the fully qualified name of the host monitor class.
+
+Example : 
+
+ *localController.hostmonitor.<monitor>* = org.inria.myriads.snoozenode.localcontroller.monitoring.api.impl.GangliaHostMonitor
+
+The parameters below have to be repeated for each <monitor>
+
+* *localController.hostmonitor.<monitor>.options*
+
+Specific options of the monitor.
+
+* *localController.hostmonitor.<monitor>.published* 
+
+String separated values of metrics to publish into Snooze.
+
+* *localController.hostmonitor.<monitor>.interval*
+
+Collection interval. Overrides the above parameter.
+
+* *localController.hostmonitor.<monitor>.numberOfMonitoringEntries*
+
+Number of monitoring values to keep.
+
+* *localController.hostmonitor.<monitor>.estimator*
+
+Estimator to use. Overrides the above parameter.
+* *localController.hostmonitor.<monitor>.thresholds.<resource name>*
+
+Thresholds to use for the resource.
+
+Anomaly Detection
+^^^^^^^^^^^^^^^^^
+
+* *localController.anomaly.detector*
+
+Possible values are *simple* or the fully qualified name of the detector class (see :ref:`plugins`).
+
+* *localController.anomaly.detector.numberOfMonitoringEntries*
+
+NumberOfMonitoring entries to take into account for the estimation. Overrides *estimator.numberOfMonitoringEntries*.
+
+* *localController.anomaly.detector.interval* 
+
+Loop detection interval.
+
+* *localController.anomaly.detector.options*
+
+One line Json (key, value) string. Specific options of the detector.
+
+
+Anomaly Resolver
+^^^^^^^^^^^^^^^^
+
+* *groupManager.anomaly.resolver* 
+
+Possible values are *underoverload* or the fully qualified name of the detector class (see :ref:`plugins`).
+
+* *groupManager.anomaly.resolver.numberOfMonitoringEntries* 
+
+Number of monitoring entries to take into account for the resolution. Overrides *estimator.numberOfMonitoringEntries*.
+
+* *groupManager.anomaly.resolver.options*
+
+One line json (key, value) string. Specific options of the resolver.
+
+Example : 
+
+*{"overloadpolicy" : "org.inria.myriads.snoozenode.groupmanager.managerpoli    cies.relocation.api.impl.GreedyOverloadRelocation", "underloadpolicy": "org.inria.myriads.snoozenode.groupmanager.    managerpolicies.relocation.api.impl.GreedyUnderloadRelocation"}*
+
+Globals
+^^^^^^^^
+
+* *globals.pluginsDirectory*
+
+Indicates where plugins should be loaded from. Absolute path.
