@@ -1,7 +1,7 @@
 .. _Downloads: http://snooze.inria.fr/download/
 
-Installation of the Command Line Interface (deprecated)
--------------------------------------------------------
+Installation of the Command Line Interface 
+------------------------------------------
 
 This page describes how to install, configure, and use the Snooze command-line interface (CLI). Note that for the time being the CLI installation tutorial is for Debian users only. Still as we also provide the CLI binary, with little efforts you should be able to run it on any distribution after following this tutorial.
 
@@ -21,12 +21,17 @@ Open the client configuration package file */usr/share/snoozeclient/configs/snoo
 
 ::
 
+    #### General #######
     general.bootstrapNodes = localhost:5000,192.168.0.2:5001
-    general.submissionPollingInterval = 6
+    general.submissionPollingInterval = 1
     general.numberOfMonitoringEntries = 5
     general.dumpOutputFile = /tmp/snooze_tree.xml
-    general.graphPollingInterval = 5
 
+    general.imagesRepositoryAddress=localhost:4000
+
+    general.graphPollingInterval = 3
+
+    #### Statistics ####
     statistics.enabled = false
     statistics.output.format = gnuplot
     statistics.output.file = /tmp/snooze_results.dat
@@ -52,20 +57,26 @@ On the shell execute the *“snoozeclient”* command. The following commands ar
 
 ::
 
-      Commands:
-          define      Define virtual cluster
-          undefine    Undefine virtual cluster
-          add         Add virtual machine to the cluster
-          remove      Remove virtual machine from the cluster
-          start       Start virtual cluster/machine
-          suspend     Suspend virtual cluster/machine
-          resume      Resume virtual cluster/machine
-          shutdown    Shutdown virtual cluster/machine
-          destroy     Destroy virtual cluster/machine
-          info        Shows virtual cluster/machine information
-          list        List virtual clusters
-          visualize   Visualize system hierarchy
-          dump        Dump system hierarchy
+    Commands:
+    define     Define virtual cluster
+    undefine   Undefine virtual cluster
+    add        Add virtual machine to the cluster
+    remove     Remove virtual machine from the cluster
+    start      Start virtual cluster/machine
+    suspend    Suspend virtual cluster/machine
+    resume     Resume virtual cluster/machine
+    shutdown   Shutdown virtual cluster/machine
+    destroy    Destroy virtual cluster/machine
+    info       Shows virtual cluster/machine information
+    list       List virtual clusters
+    dump       Dump system hierarchy
+    reboot     Shutdown virtual cluster/machine
+    resize     Resize virtual machine or virtual cluster
+    hosts      Get the Hosts List
+    images     List the available images
+    migrate    migrate virtual machine
+
+
 
 You can display a help for each command by executing “snoozeclient [command] –help“.
 
@@ -94,10 +105,35 @@ If your network parameters (gateway, netmask, nameserver …) are static, read :
 
 If you need to have more flexibility on your network parameter, read :ref:`dynamic-contextualization` . With this method you will be able to change the network parameters of your virtual machine more easily.
 
-Start the Virtual Machines
+List the available images
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The VM can now be added to the VC. Therefore you need to specify the VC name and pass the VM template describing your VM environment. In addition networking capacity constraints can be specified. For example, Snooze can be instructed to cap the VMs network capacity requirements to 10MBit/sec. The following command adds a VM those network capacity is bounded to 10MBit. Note that in case of no network capacity restrictions are given the default value is 100MBit. 
+::
+
+    ($) snoozeclient images
+
+    Name                                    Capacity           Allocation        Format            BackingStore   
+    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    debian-hadoop-context-big.qcow2         53687091200        2020872192        qcow2             null           
+    resilin-base.raw                        47100985344        2028998656      
+
+
+Add virtual machines to the cluster
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following command will add a virtual machine based on the image *debian-hadoop-context-big.qcow2*. The default parameters for *vcpus*, *memory* and *network* will be used.
+
+::
+
+    ($) snoozeclient add -vcn myVC -iid debian-hadoop-context-big.qcow2
+    Add command successfull!
+
+Submit the following to discover what are your options : 
+
+:: 
+    ($) snoozeclient add -help
+
+Alternatively you can add a virtual machine by specifying a libvirt template to use for the virtual machine.
 
 ::
 
@@ -105,6 +141,9 @@ The VM can now be added to the VC. Therefore you need to specify the VC name and
 
 
 Note that you can always remove a VM by simply calling: *snoozeclient remove -vcn myVC -vmn myVM*
+
+Start the Virtual Machines
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can now either add more VMs and start all of them at once or trigger individual VMs submissions by executing one of the following commands:
 
