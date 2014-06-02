@@ -73,7 +73,7 @@ Hypervisor
 ^^^^^^^^^^
 * *hypervisor.driver*
 
-The name of the underlying hypervisor driver. It is set to qemu by default.
+The name of the underlying hypervisor driver. It is set to qemu by default. Set it to kvm to enable full virtualization. 
 
 * *hypervisor.transport* 
 
